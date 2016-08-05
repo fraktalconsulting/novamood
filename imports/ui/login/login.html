@@ -1,0 +1,39 @@
+<div layout="row" layout-align="center center" style="height: calc(100vh - 64px);" layout-padding>
+    <div style="max-width: 680px" flex>
+        <br>
+        <div layout="row" layout-align="center">
+            <h1 class="md-title">Välkommen till Nova Mood!</h1>
+        </div>
+        <br>
+
+        <div layout="column">
+            <div layout="row">
+                <h5 ng-if="vm.message !== ''">{{vm.message}}</h5>
+            </div>
+            <div layout="row">
+                <md-input-container class="md-block" flex>
+                    <label>Användarnamn</label>
+                    <input ng-model="vm.username" ng-keyup="$event.keyCode == 13 && !!vm.username && !!vm.password && vm.login()"/>
+                </md-input-container>
+            </div>
+
+            <div layout="row">
+                <md-input-container class="md-block" flex>
+                    <label>Lösenord</label>
+                    <input type="password" ng-model="vm.password" ng-keyup="$event.keyCode == 13 && !!vm.username && !!vm.password && vm.login()"/>
+                </md-input-container>
+            </div>
+
+            <div layout="row">
+                <md-button flex class="md-raised md-primary" ng-click="vm.login()">Logga in</md-button>
+            </div>
+
+            <div layout="row" flex="30">
+                <md-button class="md-primary" ui-sref="app.signupSpecialist">Registrera dig som specialist</md-button>
+                <span flex></span>
+                <md-button class="md-primary" ui-sref="app.signupPatient">Registrera dig som patient</md-button>
+            </div>
+        </div>
+    </div>
+
+</div>
