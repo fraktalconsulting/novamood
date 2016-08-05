@@ -1,0 +1,70 @@
+<md-content >
+        <md-toolbar layout="row" >
+            <div flex-xs flex class="md-toolbar-tools">
+
+                <ul ng-if="vm.isLoggedIn" class="side-menu">
+                    <div ng-repeat="section in vm.menu.sections" class="parent-list-item"
+                         ng-class="{'parentActive' : vm.isSectionSelected(section)}">
+                        <ng-repeat ng-repeat="item in section.items">
+                            <menu-link item="item" controller="vm" ng-if="item.type === 'link'"></menu-link>
+                            <menu-toggle item="item" controller="vm" ng-if="item.type === 'toggle'"></menu-toggle>
+                        </ng-repeat>
+                    </div>
+                </ul>
+
+                <span flex></span>
+								<h1 ng-if="!vm.isLoggedIn">Nova Mood</h1>
+                <a ui-sref="app.dashboardSpecialist" ng-if="vm.isLoggedIn"><h1>Nova Mood</h1></a>
+                <span flex></span>
+
+
+                <h6 ng-if="vm.isLoggedIn">Inloggad som: {{currentUser.username}}</h6>
+
+                <md-button class="md-icon-button" ng-if="vm.isLoggedIn" aria-label="Settings" ui-sref="app.account">
+                    <md-icon md-svg-icon="action:ic_account_circle_24px" class="md-avatar-icon"
+                             md-menu-align-target></md-icon>
+                    <md-tooltip md-direction="bottom" md-visible="tooltipVisible">Visa profil</md-tooltip>
+                </md-button>
+
+                <md-button class="md-icon-button" ng-if="vm.isLoggedIn" aria-label="Messages" ng-click="vm.openMessageNav()"
+                           ng-if="vm.isLoggedIn">
+                    <md-icon md-svg-icon="communication:ic_email_24px" class="md-avatar-icon"></md-icon>
+                </md-button>
+
+                <md-button class="md-icon-button" ng-if="vm.isLoggedIn" aria-label="Settings" ng-click="vm.logout()">
+                    <md-icon md-svg-icon="content:ic_backspace_24px" class="md-avatar-icon"
+                             md-menu-align-target></md-icon>
+                    <md-tooltip md-direction="bottom" md-visible="tooltipVisible">Logga ut</md-tooltip>
+                </md-button>
+            </div>
+        </md-toolbar>
+    </md-content>
+
+<md-sidenav layout="column" ng-if="vm.isLoggedIn" class="md-sidenav-right md-whiteframe-z4" md-component-id="right"
+            hide-print>
+    <md-toolbar class="md-toolbar-tools">
+        <h1 class="md-toolbar-tools">Messages</h1>
+    </md-toolbar>
+    <div flex-layout-xs="50">
+    <md-button class="md-icon-button" aria-label="Settings" ng-click="vm.toggleSidenav()" hide-gt-md
+               ng-if="vm.isLoggedIn">
+        <md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
+    </md-button>
+    <md-content flex role="navigation" class="site-sidenav-content">
+        <md-list>
+            <md-list-item class="md-3-line secondary-button-padding" ng-repeat="message in vm.userMessages.messages"
+                          ng-click="vm.openMessage($event, message)">
+                <md-icon ng-if="message.action === 'message'" md-svg-icon="bell.md-dark" class="md-avatar-icon"></md-icon>
+                <md-icon ng-if="message.action === 'invite'" md-svg-icon="content:ic_add_circle_24px"
+                         class="md-avatar-icon"></md-icon>
+                <div class="md-list-item-text">
+                    <h3>{{message.title}}</h3>
+                    <h4>{{message.createdAt | date:'MM-dd HH:mm'}}</h4>
+                    <p>Inbjuden av: {{vm.getUser(message.specialist)}}</p>
+                </div>
+                <md-divider></md-divider>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</md-sidenav>
+

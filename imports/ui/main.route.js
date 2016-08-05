@@ -1,6 +1,5 @@
 
 export function router($stateProvider, $urlRouterProvider, $locationProvider) {
-    'ngInject';
 
     $stateProvider
         .state('app', {
