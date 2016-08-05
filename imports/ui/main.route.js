@@ -10,6 +10,14 @@ export function router($stateProvider, $urlRouterProvider, $locationProvider) {
                 locale: () => {
                     return 'sv';
                 }
+            },
+            resolve: {
+                 translate:
+                 ($q, $stateParams, $translate) => {
+                 'ngInject';
+                 $translate.use ($stateParams.locale);
+                 return $q.resolve ();
+                 }
             }
         })
         .state('app.login', {
