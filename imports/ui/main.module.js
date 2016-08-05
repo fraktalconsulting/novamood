@@ -3,15 +3,35 @@
  */
 
 import angular from 'angular';
-import ngMaterial from 'angular-material';
-import uiRouter from 'angular-ui-router';
 import angularMeteor from 'angular-meteor';
+import angularMeteorAuth from 'angular-meteor-auth';
+import ngAnimate from 'angular-animate';
+import ngSanitize from 'angular-sanitize';
+import uiRouter from 'angular-ui-router';
+import ngTranslate from 'angular-translate';
 import ngToastr from 'angular-toastr';
+import ngMaterial from 'angular-material';
+import ngTable from 'angular-material-data-table';
+import ngFileUpload from 'ng-file-upload';
+
+import 'angular-moment';
+import 'angular-material/angular-material.css';
+import 'angular-translate-loader-static-files';
+
+import 'angular-material-data-table/dist/md-data-table.min.css';
+import 'angular-material-datetimepicker/css/material-datetimepicker.min.css';
+import 'angular-local-storage/dist/angular-local-storage.js';
+import 'sc-date-time/sc-date-time.css';
+import 'later/later.min';
+
+import 'angular-chart.js/dist/angular-chart.min.js';
+import 'chart.js/dist/Chart.min.js'
 
 
 import {router} from './main.route';
 import {config} from './main.config';
 
+import {LoggerService} from './logger.service'
 import {AccountController} from './account/account.controller';
 import {SignupSpecialistController} from './signup/signupspecialist.controller';
 import {SignupPatientController} from './signup/signuppatient.controller';
@@ -34,10 +54,18 @@ import {menuLink} from './navbar/menulink.directive';
 
 
 export default angular.module('novamood', [
-        uiRouter,
-        ngMaterial,
-        angularMeteor,
-        ngToastr,
+            angularMeteor,
+            angularMeteorAuth,
+            ngSanitize,
+            ngAnimate,
+            uiRouter,
+            ngTranslate,
+            ngToastr,
+            ngMaterial,
+            ngTable,
+            ngFileUpload,
+            'LocalStorageModule',
+            'chart.js'
 
 ])
 
@@ -56,9 +84,9 @@ export default angular.module('novamood', [
     .controller('PatientHealthProviderModalController', PatientHealthProviderModalController)
     .controller('ColleagueController', ColleagueController)
     .controller('ColleagueModalController', ColleagueModalController)
-
     .controller('LoginController', LoginController)
     .directive('novaMoodNavBar', novaMoodNavBar)
     .directive('menuLink', menuLink)
+    .service('$logger', LoggerService)
     .config(router)
     .config(config)

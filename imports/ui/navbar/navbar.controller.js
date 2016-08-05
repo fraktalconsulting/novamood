@@ -1,8 +1,8 @@
 import './navbar.html';
 import angular from 'angular';
 import {Roles} from 'meteor/alanning:roles';
-//import {Notifications} from '../../api/notifications/notifications.collection';
-//import {PatientData} from '../../api/patientdata';
+import {Notifications} from '../../api/notifications/notifications.collection';
+import {PatientData} from '../../api/patientdata';
 
 import {itemsPatient} from './menuitems';
 import {itemsSpecialist} from './menuitems';
