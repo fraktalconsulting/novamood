@@ -1,0 +1,113 @@
+<div flex layout-padding>
+    <md-toolbar class="md-table-toolbar md-default" ng-hide="vm.rowSelection && vm.selected.length">
+        <div class="md-toolbar-tools">
+            <span ng-hide="vm.searchBar">Kollegor</span>
+            <md-icon ng-show="vm.searchBar" md-svg-icon="magnify"></md-icon>
+            <span flex ng-hide="vm.searchBar"></span>
+            <input ng-show="vm.searchBar" flex ng-model="vm.searchInput" placeholder="Search"/>
+            <md-button ng-show="vm.searchBar" class="md-icon-button" aria-label="Settings"
+                       ng-click="vm.searchBar = false; vm.searchInput = ''">
+                <md-icon md-svg-icon="close"></md-icon>
+            </md-button>
+            <md-button ng-hide="vm.searchBar" class="md-icon-button" aria-label="Settings"
+                       ng-click="vm.searchBar = true">
+                <md-icon md-svg-icon="magnify"></md-icon>
+            </md-button>
+            <md-menu>
+                <md-button class="md-icon-button" aria-label="Settings" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                    <md-icon md-svg-icon="dots-vertical"></md-icon>
+                </md-button>
+                <md-menu-content width="4">
+                    <md-menu-item>
+                        <md-switch ng-model="vm.showDeleted">Show Deleted</md-switch>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+    </md-toolbar>
+    <md-toolbar md-scroll-shrink class="md-table-toolbar alternate" ng-show="vm.rowSelection && vm.selected.length">
+        <div class="md-toolbar-tools">
+            <span>{{vm.selected.length}} {{vm.selected.length > 1 ? 'items' : 'item'}} selected</span>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="Settings" ng-click="vm.deleteRows()">
+                <md-icon md-svg-icon="action:ic_delete_24px"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+
+    <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Mina kollegor">
+
+    <md-table-container>
+        <table md-table md-row-select="vm.rowSelection" multiple="{{vm.multiSelect}}" ng-model="vm.selected"
+               md-progress="vm.promise">
+            <thead md-head md-order="vm.query.employee" md-on-reorder="vm.getEmployees()">
+            <tr md-row>
+                <th md-column md-order-by="vm.getFirstName"><span>Förnamn</span></th>
+                <th md-column md-order-by="getLastName(lastName)">Efternamn</th>
+                <th md-column hide-xs hide-sm md-order-by="phonenumber">Telefonnummer</th>
+                <th md-column hide-xs hide-sm md-order-by="employee.username">Email</th>
+                <th md-column></th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row md-select="patient" md-select-id="username" md-auto-select ng-repeat="colleague in vm.colleagues">
+                <td md-cell><span ng-repeat="firstName in colleague">{{vm.getFirstName(firstName)}}</span></td>
+                <td md-cell><span ng-repeat="lastName in colleague">{{vm.getLastName(lastName)}}</span></td>
+                <td md-cell hide-xs hide-sm><span ng-repeat="phoneNumber in colleague">{{vm.getPhoneNumber(phoneNumber)}}</span> </td>
+                <td md-cell hide-xs hide-sm>{{colleague.username}} </span> </td>
+
+                <td md-cell>
+                    <md-button class="md-icon-button" aria-label="Settings"
+                               ng-click="vm.openColleague($event, colleague)">
+                        <md-icon md-svg-icon="action:ic_open_in_new_24px"></md-icon>
+                    </md-button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+        </md-tab>
+        <md-tab label="Sök bland kollegor">
+            <md-table-container>
+                <table md-table md-row-select="vm.rowSelection1" multiple="{{vm.multiSelect}}" ng-model="vm.selected"
+                       md-progress="vm.promise">
+                    <thead md-head md-order="vm.query.employee" md-on-reorder="vm.getEmployees()">
+                    <tr md-row>
+                        <th md-column md-order-by="vm.getFirstName"><span>Förnamn</span></th>
+                        <th md-column md-order-by="getLastName(lastName)">Efternamn</th>
+                        <th md-column hide-xs hide-sm md-order-by="phonenumber">Telefonnummer</th>
+                        <th md-column hide-xs hide-sm md-order-by="employee.username">Email</th>
+                        <th md-column></th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row md-select="patient" md-select-id="username" md-auto-select ng-repeat="colleague in vm.colleagues">
+                        <td md-cell><span ng-repeat="firstName in colleague">{{vm.getFirstName(firstName)}}</span></td>
+                        <td md-cell><span ng-repeat="lastName in colleague">{{vm.getLastName(lastName)}}</span></td>
+                        <td md-cell hide-xs hide-sm><span ng-repeat="phoneNumber in colleague">{{vm.getPhoneNumber(phoneNumber)}}</span> </td>
+                        <td md-cell hide-xs hide-sm>{{colleague.username}} </span> </td>
+
+                        <td md-cell>
+                            <md-button class="md-icon-button md-primary" aria-label="Settings"
+                                       ng-click="vm.openColleague($event, colleague)">
+                                <md-tooltip md-direction="top" md-visible="tooltipVisible">Visa information</md-tooltip>
+
+                                <md-icon md-svg-icon="action:ic_open_in_new_24px"></md-icon>
+                            </md-button>
+                            <md-button class="md-icon-button md-primary" aria-label="Settings"
+                                       ng-click="vm.inviteColleague($event, colleague)">
+                                <md-tooltip md-direction="top" md-visible="tooltipVisible">Lägg till som kontakt</md-tooltip>
+                                <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
+                            </md-button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+        </md-tab>
+    </md-tabs>
+
+</div>

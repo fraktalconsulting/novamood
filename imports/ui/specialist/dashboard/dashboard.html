@@ -1,0 +1,193 @@
+<div ng-cloak layout-gt-sm="row" layout="column" style="height: calc(100vh - 64px);" ng-if="!vm.showPatientDashboard">
+    <div flex-gt-sm="50" flex style="height: calc(100vh - 64px);">
+        <md-toolbar layout="row" class="md-hue-3">
+            <div class="md-toolbar-tools">
+                <span>Mina patienter</span>
+            </div>
+        </md-toolbar>
+        <md-content>
+            <md-list flex>
+                <md-subheader class="md-no-sticky">Aktivitet för mina patienter</md-subheader>
+                <md-list-item class="md-3-line" ng-repeat="item in vm.patients" ng-click="null">
+                    <img ng-src="{{item.thumbnail}}" class="md-avatar" alt="{{item.who}} "/>
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ item.firstName }} {{ item.lastName }}</h3>
+                        <h4>{{ item.username }}</h4>
+                        <p>Aktivitet blabla   Datum: 2016-07-22</p>
+                    </div>
+                </md-list-item>
+                <md-divider></md-divider>
+
+            </md-list>
+        </md-content>
+    </div>
+    <md-divider></md-divider>
+    <div flex-gt-sm="50" flex style="height: calc(100vh - 64px);">
+        <md-toolbar layout="row" class="md-hue-3">
+            <div class="md-toolbar-tools">
+                <span>Mina kollegor</span>
+            </div>
+        </md-toolbar>
+        <md-content>
+
+
+            <md-content>
+                <md-input-container>
+                    <label>Status</label>
+                    <textarea ng-model="status.statusText" type="text" rows="1"></textarea>
+                    <md-button class="md-raised md-warn" ng-click="status.addStatus()">Post status</md-button>
+                </md-input-container>
+
+                <md-list>
+                    <md-list-item class="md-3-line" ng-repeat="statusItem in colleagues | orderBy:'-date'">
+                        <img ng-src="http://www.gravatar.com/avatar/{{status.md5.createHash(statusItem.user.email)}}"
+                             class="face" alt="{{statusItem.user.username}}">
+                        <div class="md-list-item-text">
+                            <h3>{{colleagues.profile.firstName}}</h3>
+                            <span>{{statusItem.date | date:'mediumDate'}}</span>
+                            <p>{{statusItem.text}}</p>
+                        </div>
+                        <md-divider md-inset></md-divider>
+                        <md-icon class="remove-status"
+                                 ng-if="statusItem.user.username === loggedInUserData.username"
+                                 ng-click="status.deleteStatus(statusItem)">
+                            X
+                        </md-icon>
+                    </md-list-item>
+                </md-list>
+            </md-content>
+
+
+            <md-list class="md-dense" flex="">
+                <md-subheader class="md-no-sticky">Senast nytt från dina kollegor</md-subheader>
+                <md-list-item class="md-3-line" ng-repeat="item in vm.colleagues">
+                    <img ng-src="{{item.thumbnail}}?{{$index}}" class="md-avatar" alt="{{item.who}}">
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ item.firstName }}</h3>
+                        <p>{{ item.username }}</p>
+                    </div>
+                </md-list-item>
+                <md-divider></md-divider>
+            </md-list>
+        </md-content>
+    </div>
+</div>
+
+<div ng-cloak layout-gt-sm="row" layout="column" style="height: calc(100vh - 64px);" ng-if="vm.showPatientDashboard">
+    <div flex-gt-sm="90" flex>
+        <md-toolbar layout="row" class="md-hue-3">
+            <div class="md-toolbar-tools">
+                <span>Undersökningar</span>
+            </div>
+        </md-toolbar>
+        <md-content>
+
+            <h3 align="center"> Aktuella MADRS-datum</h3>
+            <!--<md-button ng-click="vm.dailyQuestion()">Daglig</md-button>
+            <md-toolbar md-scroll-shrink class="md-table-toolbar alternate" ng-show="vm.rowSelection && vm.selected.length">
+                <div class="md-toolbar-tools">
+                    <span>{{vm.selected.length}} {{vm.selected.length > 1 ? 'items' : 'item'}} selected</span>
+                    <span flex></span>
+                    <md-button class="md-icon-button" aria-label="Settings" ng-click="vm.deleteRows()">
+                        <md-icon md-svg-icon="action:ic_delete_24px"></md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar> -->
+            <md-table-container>
+                <table md-table md-row-select="vm.rowSelection" multiple="{{vm.multiSelect}}"
+                       ng-model="vm.selected"
+                       md-progress="vm.promise" flex="100">
+                    <thead md-head md-order="vm.query.patient" md-on-reorder="vm.getPatients()">
+                    <tr md-row>
+                        <th md-column>Svarsdatum</th>
+                        <th md-column>Sista svarsdatum</th>
+                        <th md-column>Specialist</th>
+                        <th md-column>Rapporterad</th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row md-select="dates" md-select-id="dates" md-auto-select
+                        ng-repeat="dates in vm.madrsCurrentDates | orderBy: '-madrsDate': true">
+                        <td md-cell> {{dates.madrsDate | date:'yyyy-MM-dd'}}</td>
+                        <td md-cell>{{dates.madrsExpires | date:'yyyy-MM-dd'}}</td>
+                        <td md-cell>{{vm.getUser(dates.specialist)}}</td>
+                        <td md-cell> {{dates.isReported}}</td>
+                        <td md-cell>
+                            <md-button class="md-icon-button" aria-label="Settings"
+                                       ng-click="vm.madrsQuestion()">
+                                <md-icon md-svg-icon="action:ic_open_in_new_24px"></md-icon>
+                                <md-tooltip md-direction="top" md-visible="tooltipVisible">Svara på MADRS</md-tooltip>
+                            </md-button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <h3 align="center">  Uppkommande MADRS-datum</h3>
+                <table md-table
+                       md-progress="vm.promise" flex="100" >
+                    <thead md-head md-order="vm.query.patient" md-on-reorder="vm.getPatients()">
+                    <tr md-row>
+                        <th md-column>Datum</th>
+                        <th md-column>Specialist</th>
+                        <th md-column></th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row md-select="dates" md-select-id="dates" md-auto-select
+                        ng-repeat="dates in vm.madrsScheduleDates | orderBy: '-madrsDate': true ">
+                        <td md-cell>{{dates.madrsDate | date:'yyyy-MM-dd'}}</td>
+                        <td md-cell>{{vm.getUser(dates.specialist)}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </md-table-container>
+        </md-content>
+    </div>
+    <md-divider></md-divider>
+    <div flex-gt-sm="50" flex style="height: calc(100vh - 64px);">
+        <md-toolbar layout="row" class="md-hue-3">
+            <div class="md-toolbar-tools">
+                <span>Nyheter från mina vårdgivare</span>
+            </div>
+        </md-toolbar>
+        <md-content>
+
+
+            <md-content>
+
+                <md-list>
+                    <md-list-item class="md-3-line" ng-repeat="statusItem in status.statusData | orderBy:'-date'">
+                        <img ng-src="http://www.gravatar.com/avatar/{{status.md5.createHash(statusItem.user.email)}}"
+                             class="face" alt="{{statusItem.user.username}}">
+                        <div class="md-list-item-text">
+                            <h3>{{statusItem.user.username}}</h3>
+                            <span>{{statusItem.date | date:'mediumDate'}}</span>
+                            <p>{{statusItem.text}}</p>
+                        </div>
+                        <md-divider md-inset></md-divider>
+                        <md-icon class="remove-status"
+                                 ng-if="statusItem.user.username === loggedInUserData.username"
+                                 ng-click="status.deleteStatus(statusItem)">
+                            X
+                        </md-icon>
+                    </md-list-item>
+                </md-list>
+            </md-content>
+
+
+            <md-list class="md-dense" flex="">
+                <md-subheader class="md-no-sticky">Senast nytt från dina kollegor</md-subheader>
+                <md-list-item class="md-3-line" ng-repeat="item in vm.todos">
+                    <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}">
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ item.who }}</h3>
+                        <p>{{ item.notes }}</p>
+                    </div>
+                </md-list-item>
+                <md-divider></md-divider>
+            </md-list>
+        </md-content>
+    </div>
+</div>

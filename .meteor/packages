@@ -20,3 +20,7 @@ insecure@1.0.7                # Allow all DB writes from clients (for prototypin
 angular-templates
 alanning:roles
 accounts-password
+aldeed:collection2
+fourseven:scss
+service-configuration
+email

@@ -1,0 +1,230 @@
+<md-dialog aria-label="Add Patient" ng-cloak style="width: 780px">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Bjud in patient</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancel()">
+                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="column" flex>
+                <div layout="row" ng-if="!vm.patientData.userId">
+                    <md-autocomplete flex
+                                     ng-disabled="vm.auto.isDisabled"
+                                     md-no-cache="vm.auto.noCache"
+                                     md-selected-item="vm.auto.selectedItem"
+                                     md-search-text-change="vm.searchTextChange()"
+                                     md-search-text="vm.auto.searchText"
+                                     md-selected-item-change="vm.selectedItemChange(item)"
+                                     md-items="item in vm.autocompleteUsers"
+                                     md-item-text="item.username"
+                                     md-min-length="0"
+                                     placeholder="Sök bland patienter">
+                        <md-item-template>
+                            <span>{{item.username}}</span>
+                        </md-item-template>
+                    </md-autocomplete>
+                </div>
+                <div layout="column" layout-padding ng-if="!vm.isUpdate">
+                    <p ng-if="!vm.auto.selectedItem && vm.auto.searchText.length > 0" class="md-warn">An invite will be
+                        sent to this email address</p>
+                </div>
+                <div ng-if="vm.patientData && vm.patientData.userId === null">
+                    <span>invite sent to {{vm.patientData.pendingEmail}}</span>
+                </div>
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="Information">
+                        <md-content>
+                            <div layout="row" flex>
+                                <md-input-container class="md-block" flex>
+                                    <label>Personnummer</label>
+                                    <input ng-model="vm.patient.profile.ssn" disabled/>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex>
+                                    <img ng-src="http://www.gravatar.com/avatar/{{status.md5.createHash(statusItem.user.email)}}"
+                                         class="face" alt="{{statusItem.user.username}}">
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <md-input-container class="md-block" flex>
+                                    <label>Telefonnummer</label>
+                                    <input ng-model="vm.patient.profile.phoneNumber" disabled/>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <md-input-container class="md-block" flex>
+                                    <label>Email</label>
+                                    <input ng-model="vm.patient.emails[0].address" disabled/>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <md-input-container class="md-block" flex>
+                                    <label>Adress</label>
+                                    <input ng-model="vm.patient.profile.address" disabled/>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <md-input-container class="md-block" flex="70">
+                                    <label>Stad</label>
+                                    <input ng-model="vm.patient.profile.city" disabled/>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex="30">
+                                    <label>Postnummer</label>
+                                    <input ng-model="vm.patient.profile.zipcode" md-maxlength="5" disabled/>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                            <md-content>
+                                <div layout="row">
+                                    <md-switch class="md-primary" ng-model="vm.switchTrue" ng-model="vm.roleCoordinator">Mood</md-switch>
+                                </div>
+                                <div layout="row">
+                                    <md-switch class="md-warn" ng-disabled="true" ng-model="vm.roleEconomy">Rehab</md-switch>
+                                </div>
+                            </md-content>
+                            </div>
+
+                        </md-content>
+                    </md-tab>
+
+                    <md-tab label="Statistik" ng-if="vm.patientData.userId">
+                        <h2 align="center">Daily statistic</h2>
+                       <!-- <form name="myForm" ng-controller="DateController as dateCtrl">
+                            <input id="exampleInput" type="month" name="input" ng-model="vm.example.value"
+                                   placeholder="yyyy-MM" min="2016-01" max="2018-12" required/>
+                            <div role="alert">
+    <span class="error" ng-show="myForm.input.$error.required">
+       Required!</span>
+    <span class="error" ng-show="myForm.input.$error.month">
+       Not a valid month!</span>
+                            </div>
+                        </form> -->
+                        <label>Välj start- och slutdatum att visa: </label>
+                        <md-datepicker ng-model="vm.selectedStartDate" md-placeholder="Enter start date" ng-change="vm.onStartDateChange()"></md-datepicker>
+                        <md-datepicker ng-model="vm.selectedEndDate" md-placeholder="Enter end date" ng-change="vm.onEndDateChange()"></md-datepicker>
+
+                        <br>
+                        <hr>
+
+                        <canvas id="line" class="chart chart-line" chart-data="vm.dataDaily"
+                                chart-labels="vm.labelsDaily" chart-series="vm.series" chart-options="vm.options"
+                                chart-dataset-override="vm.datasetOverride" chart-colors="vm.Colors" chart-click="vm.onClick">
+                        </canvas>
+
+                        <br>
+                        <hr>
+                        <h2 align="center">Madrs statistic</h2>
+                        <label>Välj start- och slutdatum att visa: </label>
+                        <md-datepicker ng-model="vm.selectedStartDate" md-placeholder="Enter start date" ng-change="vm.onStartDateChange()"></md-datepicker>
+                        <md-datepicker ng-model="vm.selectedEndDate" md-placeholder="Enter end date" ng-change="vm.onEndDateChange()"></md-datepicker>
+                        <br>
+                        <hr>
+
+
+
+                        <canvas id="bar" class="chart chart-bar"
+                                chart-data="vm.dataMadrs" chart-options="vm.madrsOptions" chart-colors="vm.Colors" chart-labels="vm.labelsMadrs" chart-series="vm.seriesMadrs"
+                        chart-hover="vm.seriesMadrs">
+                        </canvas>
+
+                    </md-tab>
+
+                    <md-tab label="Mood" ng-if="vm.patientData.userId">
+
+                        <div layout="row">
+                            <h4>Här kan du schemalägga hur ofta du vill att patienterna ska utföra testerna </h4>
+                        </div>
+
+
+                        <md-content>
+                        <h5>Schemaläggning för dagliga frågan (inte tillgänglig för tillfället) </h5>
+                        <div layout="row">
+                            <md-datepicker ng-model="vm.patient.profile.DailyStart" md-placeholder="Startdatum" disabled></md-datepicker>
+                        </div>
+                        <br>
+                        <div layout="row">
+                            <md-datepicker ng-model="vm.user.profile.DailyEnd" md-placeholder="Slutdatum" disabled
+
+                                            ></md-datepicker>
+                        </div>
+                        <br>
+
+                            <!--ng-disabled="vm.noEndDate" -->
+
+
+
+                        Tillsvidare:
+                        <md-checkbox ng-model="vm.noEndDate" aria-label="Tillsvidare" disabled>
+                        </md-checkbox>
+
+                        <div layout="row">
+                        <md-button class="md-primary" ng-click="vm.saveDailyDate()" style="margin-right:20px;" disabled>
+                            Spara inställningar
+                        </md-button>
+                        </div>
+
+                        <hr>
+
+                        <h5>Välj vilka datum patienten ska utföra Madrs</h5>
+                        <div layout="row">
+                            <md-datepicker ng-model="vm.madrsDate"
+                                           md-placeholder="Väl datum"></md-datepicker>
+                            <md-button class="md-primary" ng-click="vm.saveDate()" style="margin-right:20px;">
+                                Lägg till detta datum
+                            </md-button>
+                        </div>
+
+                        <div layout="row">
+
+
+
+                            <md-table-container>
+                                <table md-table md-row-select="vm.rowSelection" multiple="{{vm.multiSelect}}"
+                                       ng-model="vm.selected"
+                                       md-progress="vm.promise">
+                                    <thead md-head md-order="vm.query.employee" md-on-reorder="vm.getEmployees()">
+                                    <tr md-row>
+                                        <th md-column><span>Datum</span></th>
+                                        <th md-column></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody md-body>
+                                    <tr md-row md-select="patient" md-select-id="username" md-auto-select
+                                        ng-repeat="dates in vm.patient.madrsDateOfPerforming | orderBy: '-madrsDate': true">
+                                        <td md-cell>{{dates.madrsDate | date:'yyyy-MM-dd'}}</td>
+
+                                        <td md-cell>
+                                            <md-button class="md-icon-button md-primary" aria-label="Settings"
+                                                       ng-click="vm.removeDate()">
+                                                <md-tooltip md-direction="top" md-visible="tooltipVisible">Ta bort datum</md-tooltip>
+                                                <md-icon md-svg-icon="content:ic_remove_24px"></md-icon>
+                                            </md-button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </md-table-container>
+                        </div>
+
+                        </md-content>
+
+
+                    </md-tab>
+
+                </md-tabs>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="vm.cancel()">
+                Cancel
+            </md-button>
+            <md-button raised ng-click="vm.save()" style="margin-right:20px;">
+                Save
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

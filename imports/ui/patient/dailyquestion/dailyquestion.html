@@ -1,0 +1,107 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="dailyquestion.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <title> Sliding smiley </title>
+</head>
+
+<body>
+
+
+<md-dialog ng-cloak style="width: 600px">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 align="center">Daglig fråga</h2>
+
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancel()">
+                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content ng-cloak style="height: 380px">
+            <div class="md-dialog-content" layout="column">
+
+                <md-input-container class="md-block" flex="50">
+                    <div layout="row" align="center center">
+                        <h3 class="header"> Hur mår du idag? </h3>
+                    </div>
+                </md-input-container>
+
+
+                <md-input-container class="md-block" flex>
+                    <div layout="row">
+                        <div id='slimey'>
+                            <div id='leye' class='eye'></div>
+                            <div id='reye' class='eye'></div>
+                            <div id='lips'></div>
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <div layout="column" flex>
+                    <div id='status' style="width: 540px; margin-top: 20px; margin-right:500px;">
+                        <div style="float: left; width: 115px;">Väldigt dåligt</div>
+                        <div style="float: left; width: 100px;" >Dåligt</div>
+                        <div style="float: left; width: 144px;" >Oförändrat</div>
+                        <div style="float: left; width: 80px;" >Bra</div>
+                        <div style="float: left; width: 100px;" >Väldigt Bra</div>
+                        <br style="clear: left;"/>
+                    </div>
+                    <div class="slider">
+                        <input id="smileSlide" type="range" min="-2" max="2" step="1" value="2" ng-model="vm.dailyQuestion.answer"
+                               onchange="changeSmile(this)"/>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="vm.cancel()">
+                Avbryt
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="vm.save()" style="margin-right:20px;"
+                       ng-disabled="resetPasswordForm.$invalid">
+                Svara
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+
+<script>
+
+    var lips = document.getElementById('lips');
+    function changeSmile(slider) {
+        var lh = lips.style.height, slide = 0;
+
+        if ((0 - slider.value) > 0) {
+            slide = (5 - slider.value);
+            lips.style.borderTop = "3px white solid";
+            lips.style.top = "calc(70%)";
+            lips.style.borderBottom = "none";
+
+        }
+        else {
+            slide = (slider.value - 0);
+            lips.style.borderBottom = "3px white solid";
+            lips.style.top = "calc(70% + " + (-(slide * 0.4)) + "px)";
+            lips.style.borderTop = "none";
+        }
+
+
+        lips.style.height = slide * 2.4 + "px";
+    }
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,77 @@
+<md-dialog aria-label="Add Patient" ng-cloak style="width: 780px">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Kollegor</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancel()">
+                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="column">
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="Information">
+                        <md-content>
+                            <div layout="row">
+                                <md-input-container class="md-block" flex>
+                                    <label>Förnamn</label>
+                                    <input ng-model="vm.colleague.profile.firstName" disabled/>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex>
+                                    <label>Efternamn</label>
+                                    <input ng-model="vm.colleague.profile.lastName" disabled/>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <md-input-container class="md-block" flex>
+                                    <label>Telefonnummer</label>
+                                    <input ng-model="vm.colleague.profile.phoneNumber" disabled/>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <md-input-container class="md-block" flex>
+                                    <label>Roll</label>
+                                    <input ng-model="vm.colleague.profile.role" disabled/>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <md-input-container class="md-block" flex>
+                                    <label>Email</label>
+                                    <input ng-model="vm.colleague.emails[0].address" disabled/>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <md-input-container class="md-block" flex>
+                                    <label>Adress</label>
+                                    <input ng-model="vm.colleague.profile.address" disabled/>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <md-input-container class="md-block" flex="70">
+                                    <label>Stad</label>
+                                    <input ng-model="vm.colleague.profile.city" disabled/>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex="30">
+                                    <label>Postnummer</label>
+                                    <input ng-model="vm.colleague.profile.zipcode" md-maxlength="5" disabled/>
+                                </md-input-container>
+                            </div>
+                        </md-content>
+                    </md-tab>
+
+                </md-tabs>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="vm.cancel()">
+                Cancel
+            </md-button>
+            <md-button raised ng-click="vm.save()" style="margin-right:20px;">
+                Save
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

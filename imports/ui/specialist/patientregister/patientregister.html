@@ -1,0 +1,82 @@
+<div flex layout-padding>
+    <md-toolbar class="md-table-toolbar md-default" ng-hide="vm.rowSelection && vm.selected.length">
+        <div class="md-toolbar-tools">
+            <span ng-hide="vm.searchBar">Patientregister</span>
+            <md-icon ng-show="vm.searchBar" md-svg-icon="magnify"></md-icon>
+            <span flex ng-hide="vm.searchBar"></span>
+            <input ng-show="vm.searchBar" flex ng-model="vm.searchInput" placeholder="Search"/>
+            <md-button ng-show="vm.searchBar" class="md-icon-button" aria-label="Settings"
+                       ng-click="vm.searchBar = false; vm.searchInput = ''">
+                <md-icon md-svg-icon="close"></md-icon>
+            </md-button>
+            <md-button ng-hide="vm.searchBar" class="md-icon-button" aria-label="Settings"
+                       ng-click="vm.searchBar = true">
+                <md-icon md-svg-icon="magnify"></md-icon>
+            </md-button>
+            <md-menu>
+                <md-button class="md-icon-button" aria-label="Settings" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                    <md-icon md-svg-icon="dots-vertical"></md-icon>
+                </md-button>
+                <md-menu-content width="4">
+                    <md-menu-item>
+                        <md-switch ng-model="vm.showDeleted">Show Deleted</md-switch>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+    </md-toolbar>
+    <md-toolbar md-scroll-shrink class="md-table-toolbar alternate" ng-show="vm.rowSelection && vm.selected.length">
+        <div class="md-toolbar-tools">
+            <span>{{vm.selected.length}} {{vm.selected.length > 1 ? 'items' : 'item'}} selected</span>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="Settings" ng-click="vm.deleteRows()">
+                <md-icon md-svg-icon="action:ic_delete_24px"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-table-container>
+        <table md-table md-row-select="vm.rowSelection" multiple="{{vm.multiSelect}}" ng-model="vm.selected"
+               md-progress="vm.promise">
+            <thead md-head md-order="vm.query.employee" md-on-reorder="vm.getEmployees()">
+            <tr md-row>
+                <th md-column md-order-by="vm.getFirstName"><span>Förnamn</span></th>
+                <th md-column flex show-gt-xs="30" md-order-by="getLastName(lastName)">Efternamn</th>
+                <th md-column hide-xs hide-sm md-order-by="phonenumber">Telefonnummer</th>
+                <th md-column hide-xs hide-sm md-order-by="employee.username">Email</th>
+                <th md-column></th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row md-select="patient" md-select-id="username" md-auto-select ng-repeat="patient in vm.patients">
+                <td md-cell>{{patient.firstName}}</td>
+                <td md-cell>{{patient.lastName}}</td>
+                <td md-cell hide-xs hide-sm>{{patient.phoneNumber}}</span></td>
+                <td md-cell hide-xs hide-sm ><span style="color: green"> {{patient.username}} </span> <span ng-if="patient.pending"
+                                                                                           style="color: red"> {{patient.pendingEmail}}
+                    - pending... </span></td>
+
+                <td md-cell>
+                    <md-button class="md-icon-button" aria-label="Settings"
+                               ng-click="vm.openPatient($event, patient)">
+                        <md-icon md-svg-icon="action:ic_open_in_new_24px"></md-icon>
+                    </md-button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+    <md-fab-speed-dial ng-hide="vm.fab.hidden" md-direction="left" md-open="vm.fab.isOpen"
+                       class="md-scale md-fab-bottom-right" ng-class="{ 'md-hover-full': vm.fab.hover }"
+                       ng-mouseenter="vm.fab.isOpen=true" ng-mouseleave="vm.fab.isOpen=false">
+        <md-fab-trigger>
+            <md-button aria-label="menu" class="md-fab md-primary" ng-click="vm.openPatient($event, null)">
+                <md-tooltip md-direction="top" md-visible="tooltipVisible">Bjud in patient</md-tooltip>
+                <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
+            </md-button>
+
+        </md-fab-trigger>
+    </md-fab-speed-dial>
+
+</div>

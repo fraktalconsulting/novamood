@@ -1,0 +1,86 @@
+<div layout="row" flex-gt-sm="50" flex style="height: calc(100vh - 64px);" layout-padding layout-align="center">
+    <md-content flex="166" layout="column">
+        <div>
+            <h1>Konto</h1>
+            <div layout="row">
+                <div layout="column">
+                    <div layout="row" flex>
+                        <md-input-container class="md-block" flex>
+                            <label>Förnamn</label>
+                            <input ng-model="vm.user.profile.firstName"/>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex>
+                            <label>Efternamn</label>
+                            <input ng-model="vm.user.profile.lastName"/>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" ng-if="!vm.showPatientAccount">
+                        <md-input-container class="md-block" flex>
+                            <label>Roll</label>
+                            <input type="text" ng-model="vm.user.profile.role" disabled/>
+                        </md-input-container>
+                    </div>
+                    <md-radio-group ng-model="vm.user.profile.gender" disabled>
+                        <md-radio-button value="male" disabled>Man</md-radio-button>
+                        <md-radio-button value="female" disabled>Kvinna</md-radio-button>
+                    </md-radio-group>
+                    <div layout="row">
+                        <md-input-container class="md-block" flex>
+                            <label>Personnummer</label>
+                            <input type="text" ng-model="vm.user.profile.ssn" required md-maxlength="12"/>
+                        </md-input-container>
+                    </div>
+                    <div layout="row">
+                        <md-input-container class="md-block" flex>
+                            <label>Telefonnummer</label>
+                            <input type="text" ng-model="vm.user.profile.phoneNumber"/>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" ng-if="vm.showPatientAccount">
+                        <md-input-container class="md-block" flex>
+                            <label>Adress</label>
+                            <input ng-model="vm.user.profile.address" required/>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" ng-if="vm.showPatientAccount">
+                        <md-input-container class="md-block" flex="70">
+                            <label>Stad</label>
+                            <input ng-model="vm.user.profile.city" required/>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="30">
+                            <label>Postnummer</label>
+                            <input ng-model="vm.user.profile.zipCode" md-maxlength="5" required/>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" ng-if="!vm.showPatientAccount">
+                        <md-input-container class="md-block" flex>
+                            <label>Arbetsplats</label>
+                            <input ng-model="vm.user.profile.workPlace" required/>
+                        </md-input-container>
+                    </div>
+                    <div layout="row">
+                        <md-button class="md-raised md-primary" ng-click="vm.resetPassword()" >Byt lösenord</md-button>
+                        <span flex></span>
+                        <md-button class="md-raised md-primary" ng-click="vm.updateProfile()">Uppdatera information</md-button>
+                    </div>
+                </div>
+                <div layout="column">
+                    <img
+                            ng-src="{{vm.image}}"
+                            ngf-drop
+                            ngf-select="vm.upload($file)"
+                            ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
+                            class="drop-box"
+                            ngf-multiple="false"
+                            ngf-allow-dir="false"
+                            ngf-accept="'image/*'"
+                            ngf-drop-available="true"
+                            width="256" height="256" layout-padding/>
+                    <div layout="row">
+                        <md-button ngf-select="vm.upload($file)">Upload</md-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </md-content>
+</div>

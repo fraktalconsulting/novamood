@@ -1,0 +1,370 @@
+<md-dialog aria-label="Madrs questions" ng-cloak style="width: 670px" xmlns="http://www.w3.org/1999/html">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>MADRS</h2>
+
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancel()">
+                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+                <div class="md-dialog-content" layout="column" ng-if="!vm.question2">
+                    <md-progress-linear md-mode="determinate" value="0"></md-progress-linear>
+                    <div layout="row">
+                        <form ng-cloak name="question1">
+                            <md-radio-group ng-model="vm.madrs.question1" required>
+																<h2>1. Sinnesstämning</h2>
+                                <h4>Här ber vi dig beskriva din sinnesstämning, om du känner dig ledsen, tungsint eller
+                                    dyster till mods. Tänk efter hur du har känt dig de senaste tre dagarna, om du har
+                                    skiftat i humöret eller om det har varit i stort sett detsamma hela tiden, och
+                                    försök särskilt komma ihåg om du har känt dig lättare till sinnes om det har hänt
+                                    något positivt. </h4>
+                                <md-radio-button value="0" class="md-primary">Jag kan känna mig glad eller ledsen, allt
+                                    efter omständigheterna.
+                                </md-radio-button>
+																<md-radio-button value="1" class="md-primary"></md-radio-button>
+                                <md-radio-button value="2" class="md-primary"> Jag känner mig nedstämd för det mesta,
+                                    men ibland kan det kännas lättare.
+                                </md-radio-button>
+                                <md-radio-button value="3" class="md-primary"></md-radio-button>
+                                <md-radio-button value="4" class="md-primary">Jag känner mig genomgående nedstämd och
+                                    dyster.
+                                </md-radio-button>
+                                <md-radio-button value="5" class="md-primary"></md-radio-button>
+                                <md-radio-button value="6" class="md-primary"> Jag kan inte glädja mig åt sådant som
+                                    vanligen skulle göra mig glad.
+                                </md-radio-button>
+                                <md-radio-button value="7" class="md-primary"></md-radio-button>
+                                <md-radio-button value="8" class="md-primary">Jag är totalt nedstämd och olycklig att
+                                    jag inte kan tänka mig värre.
+                                </md-radio-button>
+                            </md-radio-group>
+
+                        </form>
+                    </div>
+
+                    <md-button ng-disabled="question1.$invalid" class="md-raised md-primary"
+                               ng-click="vm.question2 = true" style="margin-right:20px;">
+                        Nästa
+                    </md-button>
+                </div>
+
+
+                <div class="md-dialog-content" layout="column" ng-if="vm.question2 && !vm.question3">
+                    <md-progress-linear md-mode="determinate" value="12"></md-progress-linear>
+                    <div layout="row">
+                        <form ng-cloak name="question2">
+                            <md-radio-group ng-model="vm.madrs.question2" required>
+                                <h2>2. Oroskänslor</h2>
+
+
+                                <h4>Här ber vi dig markera i vilken utsträckning du haft känslor av inre spänning, olust
+                                    och ångest eller odefinierad rädsla under de senaste tre dagarna. Tänk särskilt på
+                                    hur intensiva känslorna varit, och om de kommit och gått eller funnits hela
+                                    tiden. </h4>
+                                <md-radio-button value="0" class="md-primary"> Jag känner mig mestadels lugn.
+                                </md-radio-button>
+                                <md-radio-button value="1" class="md-primary"></md-radio-button>
+                                <md-radio-button value="2" class="md-primary"> Ibland har jag obehagliga känslor av inre
+                                    oro.
+                                </md-radio-button>
+                                <md-radio-button value="3" class="md-primary"></md-radio-button>
+                                <md-radio-button value="4" class="md-primary">Jag har ofta en känsla av inre oro som
+                                    ibland kan bli mycket stark, och som jag måste anstränga mig för att bemästra.
+                                </md-radio-button>
+                                <md-radio-button value="5" class="md-primary"></md-radio-button>
+                                <md-radio-button value="6" class="md-primary">Jag har fruktansvärda, långvariga eller outhärdliga ångestkänslor.</md-radio-button>
+                            </md-radio-group>
+
+
+                        </form>
+                    </div>
+
+                    <md-button class="md-raised md-primary" ng-click="vm.question3 = true" style="margin-right:20px;"
+                               ng-disabled="question2.$invalid">
+                        Nästa
+                    </md-button>
+                </div>
+
+                <div class="md-dialog-content" layout="column" ng-if="vm.question3 && !vm.question4">
+                    <md-progress-linear md-mode="determinate" value="24"></md-progress-linear>
+                    <div layout="row">
+                        <form ng-cloak name="question3">
+                            <md-radio-group ng-model="vm.madrs.question3" required>
+                                <h2>3. Sömn</h2>
+                                <h4>Här ber vi Dig beskriva hur bra du sover. Tänk efter hur länge du sovit och hur god
+                                    sömnen varit under de senaste tre nätterna. Bedömningen skall avse hur du faktiskt
+                                    sovit, oavsett om du tagit sömnmedel eller ej. Om du sover mer än vanligt, välj
+                                    första alternativet. </h4>
+                                <md-radio-button value="0" class="md-primary">Jag sover lugnt och bra och tillräckligt
+                                    länge för mina behov. Jag har inga särskilda svårigheter att somna.
+                                </md-radio-button>
+                                <md-radio-button value="1" class="md-primary"></md-radio-button>
+                                <md-radio-button value="2" class="md-primary">Jag har vissa sömnsvårigheter. Ibland har
+                                    jag svårt att somna eller sover ytligare eller oroligare än vanligt.
+                                </md-radio-button>
+                                <md-radio-button value="3" class="md-primary"></md-radio-button>
+                                <md-radio-button value="4" class="md-primary">Jag sover minst två timmar mindre per natt
+                                    än normalt. Jag vaknar ofta under natten, även om jag inte blir störd.
+                                </md-radio-button>
+                                <md-radio-button value="5" class="md-primary"></md-radio-button>
+                                <md-radio-button value="6" class="md-primary"> Jag sover mycket dåligt, inte mer än 2-3
+                                    timmar per natt.
+                                </md-radio-button>
+                            </md-radio-group>
+
+                        </form>
+                    </div>
+
+                    <md-button class="md-raised md-primary" ng-click="vm.question4 = true" style="margin-right:20px;"
+                               ng-disabled="question3.$invalid">
+                        Nästa
+                    </md-button>
+                </div>
+
+                <div class="md-dialog-content" layout="column" ng-if="vm.question4 && !vm.question5">
+                    <md-progress-linear md-mode="determinate" value="36"></md-progress-linear>
+                    <div layout="row">
+                        <form ng-cloak name="question4">
+                            <md-radio-group ng-model="vm.madrs.question4" required>
+                                <h2>4. Matlust</h2>
+                                <h4>Här ber vi dig ta ställning till hur din aptit är, och tänka efter om den på något
+                                    sätt skilt sig från vad som är normalt för dig. Om du skulle ha bättre aptit än
+                                    normalt, välj första alternativet. </h4>
+                                <md-radio-button value="0" class="md-primary">Min aptit är som den brukar vara.
+                                </md-radio-button>
+                                <md-radio-button value="1" class="md-primary"></md-radio-button>
+                                <md-radio-button value="2" class="md-primary">Min aptit är sämre än vanligt.
+                                </md-radio-button>
+                                <md-radio-button value="3" class="md-primary"></md-radio-button>
+                                <md-radio-button value="4" class="md-primary">Min aptit har nästan helt försvunnit.
+                                    Maten smakar inte och jag måste tvinga mig att äta.
+                                </md-radio-button>
+                                <md-radio-button value="5" class="md-primary"></md-radio-button>
+                                <md-radio-button value="6" class="md-primary">Jag vill inte ha någon mat. Om jag skall
+                                    få någonting i mig, måste jag övertalas att äta.
+                                </md-radio-button>
+                            </md-radio-group>
+
+                        </form>
+                    </div>
+
+                    <md-button class="md-raised md-primary" ng-click="vm.question5  = true" style="margin-right:20px;"
+                               ng-disabled="question4.$invalid">
+                        Nästa
+                    </md-button>
+                </div>
+
+                <div class="md-dialog-content" layout="column" ng-if="vm.question5 && !vm.question6">
+                    <md-progress-linear md-mode="determinate" value="47"></md-progress-linear>
+                    <div layout="row">
+                        <form ng-cloak name="question5">
+                            <md-radio-group ng-model="vm.madrs.question5" required>
+                                <h2>5. Koncentrationsförmåga</h2>
+                                <h4>Här ber vi dig ta ställning till din förmåga att hålla tankarna samlade och
+                                    koncentrera dig på olika aktiviteter. Tänk igenom hur du fungerar vid olika sysslor
+                                    som kräver olika grad av koncentrationsförmåga, t ex läsning av komplicerad text,
+                                    lätt tidningstext och TV-tittande. </h4>
+                                <md-radio-button value="0" class="md-primary">Jag har inga koncentrationssvårigheter.
+                                </md-radio-button>
+                                <md-radio-button value="1" class="md-primary"></md-radio-button>
+                                <md-radio-button value="2" class="md-primary">Jag har tillfälligt svårt att hålla
+                                    tankarna samlade på sådant som normalt skulle fånga min uppmärksamhet (t ex läsning
+                                    eller TV-tittande).
+                                </md-radio-button>
+                                <md-radio-button value="3" class="md-primary"></md-radio-button>
+                                <md-radio-button value="4" class="md-primary">Jag har påtagligt svårt att koncentrera
+                                    mig på sådant som normalt inte kräver någon ansträngning från min sida (t ex läsning
+                                    eller samtal med andra människor).
+                                </md-radio-button>
+                                <md-radio-button value="5" class="md-primary"></md-radio-button>
+                                <md-radio-button value="6" class="md-primary">Jag kan överhuvudtaget inte koncentrera
+                                    mig på någonting.
+                                </md-radio-button>
+                            </md-radio-group>
+
+                        </form>
+                    </div>
+
+                    <md-button class="md-raised md-primary" ng-click="vm.question6 = true" style="margin-right:20px;"
+                               ng-disabled="question5.$invalid">
+                        Nästa
+                    </md-button>
+                </div>
+
+                <div class="md-dialog-content" layout="column" ng-if="vm.question6 && !vm.question7">
+                    <md-progress-linear md-mode="determinate" value="59"></md-progress-linear>
+                    <div layout="row">
+                        <form ng-cloak name="question6">
+                            <md-radio-group ng-model="vm.madrs.question6" required>
+                                <h2>6. Initiativförmåga</h2>
+                                <h4>Här ber vid dig försöka värdera din handlingskraft. Frågan gäller om du har lätt
+                                    eller svårt för att komma igång med sådant du tycker du bör göra, och i vilken
+                                    utsträckning du måste över vinna ett inre motstånd när du skall ta itu med
+                                    något. </h4>
+                                <md-radio-button value="0" class="md-primary">Jag har inga svårigheter med att ta itu
+                                    med nya uppgifter.
+                                </md-radio-button>
+                                <md-radio-button value="1" class="md-primary"></md-radio-button>
+                                <md-radio-button value="2" class="md-primary">När jag skall ta itu med något, tar det
+                                    emot på ett sätt som inte är normalt för mig.
+                                </md-radio-button>
+                                <md-radio-button value="3" class="md-primary"></md-radio-button>
+                                <md-radio-button value="4" class="md-primary">Det krävs en stor ansträngning för mig att
+                                    ens komma igång med enkla uppgifter som jag vanligtvis utför mer eller mindre
+                                    rutinmässigt.
+                                </md-radio-button>
+                                <md-radio-button value="5" class="md-primary"></md-radio-button>
+                                <md-radio-button value="6" class="md-primary">Jag kan inte förmå mig att ta itu med de
+                                    enklaste vardagssysslor.
+                                </md-radio-button>
+                            </md-radio-group>
+
+                        </form>
+                    </div>
+
+                    <md-button class="md-raised md-primary" ng-click="vm.question7 = true" style="margin-right:20px;"
+                               ng-disabled="question6.$invalid">
+                        Nästa
+                    </md-button>
+                </div>
+
+                <div class="md-dialog-content" layout="column" ng-if="vm.question7 && !vm.question8">
+                    <md-progress-linear md-mode="determinate" value="70"></md-progress-linear>
+                    <div layout="row">
+                        <form ng-cloak name="question7">
+                            <md-radio-group ng-model="vm.madrs.question7" required>
+                                <h2>7. Känslomässigt engagemang</h2>
+                                <h4>Här ber vi dig ta ställning till hur du upplever ditt intresse för omvärlden och för
+                                    andra människor, och för sådana aktiviteter som brukar bereda dig nöje och
+                                    glädje. </h4>
+                                <md-radio-button value="0" class="md-primary">Jag är intresserad av omvärlden och
+                                    engagerar mig i den, och det bereder mig både nöje och glädje.
+                                </md-radio-button>
+                                <md-radio-button value="1" class="md-primary"></md-radio-button>
+                                <md-radio-button value="2" class="md-primary">Jag känner mindre starkt för sådant som
+                                    brukar engagera mig. Jag har svårare än vanligt att bli glad eller svårare att bli
+                                    arg när det är befogat.
+                                </md-radio-button>
+                                <md-radio-button value="3" class="md-primary"></md-radio-button>
+                                <md-radio-button value="4" class="md-primary">Jag kan inte känna något intresse för
+                                    omvärlden, inte ens för vänner och bekanta.
+                                </md-radio-button>
+                                <md-radio-button value="5" class="md-primary"></md-radio-button>
+                                <md-radio-button value="6" class="md-primary">Jag har slutat uppleva några känslor. Jag
+                                    känner mig smärtsamt likgiltig även för mina närmaste.
+                                </md-radio-button>
+                            </md-radio-group>
+
+                        </form>
+                    </div>
+
+                    <md-button class="md-raised md-primary" ng-click="vm.question8 = true" style="margin-right:20px;"
+                               ng-disabled="question7.$invalid">
+                        Nästa
+                    </md-button>
+                </div>
+
+                <div class="md-dialog-content" layout="column" ng-if="vm.question8 && !vm.question9">
+                    <md-progress-linear md-mode="determinate" value="80"></md-progress-linear>
+                    <div layout="row">
+                        <form ng-cloak name="question8">
+                            <md-radio-group ng-model="vm.madrs.question8" required>
+                                <h2>8. Pessimism</h2>
+                                <h4>Frågan gäller hur du ser på din egen framtid och hur du uppfattar ditt eget värde.
+                                    Tänk efter i vilken utsträckning du ger dig självförebråelser, om du plågas av
+                                    skuldkänslor, och om du oroat dig oftare än vanligt för t ex din ekonomi eller din
+                                    hälsa. </h4>
+                                <md-radio-button value="0" class="md-primary">Jag ser på framtiden med tillförsikt. Jag
+                                    är på det hela taget ganska nöjd med mig själv.
+                                </md-radio-button>
+                                <md-radio-button value="1" class="md-primary"></md-radio-button>
+                                <md-radio-button value="2" class="md-primary">Ibland klandrar jag mig själv och tycker
+                                    att jag är mindre värd än andra.
+                                </md-radio-button>
+                                <md-radio-button value="3" class="md-primary"></md-radio-button>
+                                <md-radio-button value="4" class="md-primary">Jag grubblar ofta över mina misslyckanden
+                                    och känner mig mindervärdig eller dålig, även om andra tycker annorlunda
+                                </md-radio-button>
+                                <md-radio-button value="5" class="md-primary"></md-radio-button>
+                                <md-radio-button value="6" class="md-primary">Jag ser allting i svart och kan inte se
+                                    någon ljusning. Det känns som om jag var en alltigenom dålig människa, och som om
+                                    jag aldrig skulle kunna få någon förlåtelse för det hemska jag gjort.
+                                </md-radio-button>
+                            </md-radio-group>
+
+                        </form>
+                    </div>
+
+                    <md-button class="md-raised md-primary" ng-click="vm.question9 = true" style="margin-right:20px;"
+                               ng-disabled="question8.$invalid">
+                        Nästa
+                    </md-button>
+                </div>
+
+                <div class="md-dialog-content" layout="column" ng-if="vm.question9 && !vm.question10">
+                    <md-progress-linear md-mode="determinate" value="90"></md-progress-linear>
+                    <div layout="row">
+                        <form ng-cloak name="question9">
+                            <md-radio-group ng-model="vm.madrs.question9" required>
+                                <h2>9. Livslust</h2>
+                                <h4>Frågan gäller din livslust, och om du känt livsleda. Har du tankar på självmord, och
+                                    i så fall, i vilken utsträckning upplever du detta som en verklig utväg? </h4>
+                                <md-radio-button value="0" class="md-primary">Jag har normal aptit på livet.
+                                </md-radio-button>
+                                <md-radio-button value="1" class="md-primary"></md-radio-button>
+                                <md-radio-button value="2" class="md-primary">Livet känns inte särskilt meningsfullt men
+                                    jag önskar ändå inte att jag vore död.
+                                </md-radio-button>
+                                <md-radio-button value="3" class="md-primary"></md-radio-button>
+                                <md-radio-button value="4" class="md-primary">Jag tycker ofta det vore bättre att vara
+                                    död, och trots att jag egentligen inte önskar det, kan självmord ibland kännas som
+                                    en möjlig utväg.
+                                </md-radio-button>
+                                <md-radio-button value="5" class="md-primary"></md-radio-button>
+                                <md-radio-button value="6" class="md-primary">Jag är egentligen övertygad om att min
+                                    enda utväg är att dö, och jag tänker mycket på hur jag bäst skall gå tillväga för
+                                    att ta mitt eget liv.
+                                </md-radio-button>
+                            </md-radio-group>
+
+                        </form>
+                    </div>
+
+                    <md-button class="md-raised md-primary" ng-click="vm.question10 = true" style="margin-right:20px;"
+                               ng-disabled="question9.$invalid">
+                        Nästa
+                    </md-button>
+                </div>
+
+                <div class="md-dialog-content" layout="column" ng-if="vm.question10 && !vm.question11">
+                    <md-progress-linear md-mode="determinate" value="100"></md-progress-linear>
+                    <div layout="row">
+                        <form ng-cloak>
+                            <h1> Tack för dina svar </h1>
+                        </form>
+                    </div>
+
+                    <md-button class="md-raised md-primary" ng-click="vm.save()" style="margin-right:20px;"
+                               ng-disabled="madrsForms.$invalid">
+                        Spara
+                    </md-button>
+                </div>
+
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-raised md-primary" ng-click="vm.save()" style="margin-right:20px;"
+                       ng-disabled="madrsForms.$invalid">
+                Spara
+            </md-button>
+            <md-button ng-click="vm.cancel()">
+                Avbryt
+            </md-button>
+
+        </md-dialog-actions>
+</md-dialog>

@@ -1,0 +1,93 @@
+<div layout="row" layout-align="center" style="height: calc(100vh - 64px);" layout-padding>
+    <md-content flex layout-align="center" layout="row">
+        <div flex-gt-sm="30" flex-xs>
+            <div layout="column">
+                <span class="md-title">Registrera som specialist</span>
+            </div>
+						<hr>
+            <br>
+            <form name="signupForm" layout="column">
+
+                <div layout="row" >
+                    <form ng-cloak>
+                        <md-radio-group ng-model="vm.profile.role" required>
+                            <h4>Vilken roll har du?</h4>
+                            <md-radio-button value="Doctor" class="md-primary" >Läkare</md-radio-button>
+                            <md-radio-button value="Nurse" class="md-primary"> Sjuksyster </md-radio-button>
+                            <md-radio-button value="PhysioTherapist" class="md-primary" >Sjukgymnast</md-radio-button>
+                        </md-radio-group>
+                    </form>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Förnamn</label>
+                        <input ng-model="vm.profile.firstName"/>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="50">
+                        <label>Efternamn</label>
+                        <input ng-model="vm.profile.lastName"/>
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex="30">
+                        <label>Personnummer</label>
+                        <input ng-model="vm.profile.ssn" md-maxlength="12"/>
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex required>
+                        <label>Email (användarnamn)</label>
+                        <input ng-model="vm.username" required/>
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex>
+                        <label>Lösenord</label>
+                        <input type="password" id="pw1" ng-model="vm.password" required/>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex>
+                        <label>Upprepa lösenord</label>
+                        <input type="password" ng-model="vm.password2" required pw-check="pw1"/>
+                    </md-input-container>
+                </div>
+
+                <md-radio-group ng-model="vm.profile.gender">
+                    <md-radio-button value="male">Man</md-radio-button>
+                    <md-radio-button value="female">Kvinna</md-radio-button>
+                </md-radio-group>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex>
+                        <label>Huvudsaklig arbetsplats</label>
+                        <input ng-model="vm.profile.workPlace" required/>
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex>
+                        <label>Telefonnummer</label>
+                        <input ng-model="vm.profile.phoneNumber"/>
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <h5 ng-if="vm.message !== ''">{{vm.message}}</h5>
+                </div>
+
+                <div layout="row">
+                    <md-button flex ng-click="vm.register()" class="md-raised md-primary"
+                               ng-disabled="signupForm.$invalid">Registrera dig!
+                    </md-button>
+                </div>
+
+            </form>
+        </div>
+    </md-content>
+</div>
+

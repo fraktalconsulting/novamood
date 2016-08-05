@@ -1,0 +1,69 @@
+<div flex layout-padding>
+    <md-toolbar class="md-table-toolbar md-default" ng-hide="vm.rowSelection && vm.selected.length">
+        <div class="md-toolbar-tools">
+            <span ng-hide="vm.searchBar">Mina vårdgivare</span>
+            <md-icon ng-show="vm.searchBar" md-svg-icon="magnify"></md-icon>
+            <span flex ng-hide="vm.searchBar"></span>
+            <input ng-show="vm.searchBar" flex ng-model="vm.searchInput" placeholder="Search"/>
+            <md-button ng-show="vm.searchBar" class="md-icon-button" aria-label="Settings"
+                       ng-click="vm.searchBar = false; vm.searchInput = ''">
+                <md-icon md-svg-icon="close"></md-icon>
+            </md-button>
+            <md-button ng-hide="vm.searchBar" class="md-icon-button" aria-label="Settings"
+                       ng-click="vm.searchBar = true">
+                <md-icon md-svg-icon="magnify"></md-icon>
+            </md-button>
+            <md-menu>
+                <md-button class="md-icon-button" aria-label="Settings" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                    <md-icon md-svg-icon="dots-vertical"></md-icon>
+                </md-button>
+                <md-menu-content width="4">
+                    <md-menu-item>
+                        <md-switch ng-model="vm.showDeleted">Show Deleted</md-switch>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+    </md-toolbar>
+    <md-toolbar md-scroll-shrink class="md-table-toolbar alternate" ng-show="vm.rowSelection && vm.selected.length">
+        <div class="md-toolbar-tools">
+            <span>{{vm.selected.length}} {{vm.selected.length > 1 ? 'items' : 'item'}} selected</span>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="Settings" ng-click="vm.deleteRows()">
+                <md-icon md-svg-icon="action:ic_delete_24px"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-table-container>
+        <table md-table md-row-select="vm.rowSelection" multiple="{{vm.multiSelect}}" ng-model="vm.selected"
+               md-progress="vm.promise">
+            <thead md-head md-order="vm.query.specialist" md-on-reorder="vm.getSpecialists()">
+            <tr md-row>
+                <th md-column md-order-by="vm.getFirstName"><span>Vårdgivarens namn</span></th>
+                <th md-column md-order-by="vm.getFirstName"><span>Vårdgivarens email</span></th>
+                <th md-column md-order-by="getLastName(lastName)">Vårdgivarens telefonnummer</th>
+                <th md-column hide-xs hide-sm md-order-by="phonenumber">Vårdgivarens arbetsplats</th>
+                <th md-column></th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row md-select="specialist" md-select-id="specialist" md-auto-select ng-repeat="specialist in vm.specialists">
+
+                <td md-cell>{{vm.getUser(specialist.specialist)}}</td>
+                <td md-cell>{{vm.getEmail(specialist.specialist)}}</td>
+                <td md-cell>{{vm.getPhoneNumber(specialist.specialist)}}</td>
+                <td md-cell hide-xs hide-sm>{{vm.getWorkPlace(specialist.specialist)}}</td>
+
+               <!-- <td md-cell>
+                    <md-button class="md-icon-button" aria-label="Settings"
+                               ng-click="vm.openSpecialist($event, patient)">
+                        <md-icon md-svg-icon="action:ic_open_in_new_24px"></md-icon>
+                    </md-button>
+                </td> -->
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+</div>
